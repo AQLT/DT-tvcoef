@@ -1,3 +1,8 @@
 .Rhistory
 .Rproj.user
 *.Rproj
+template
+_extensions/
+img/
+template/
+.DS_Store
