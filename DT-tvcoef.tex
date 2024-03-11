@@ -242,7 +242,7 @@ linéaire avec des coefficients variant dans le temps : régression par
 morceaux, régression locale et modélisation espace-état. Elle détaille
 également leur implémentation sous R grâce au package \texttt{tvCoef}. À
 travers une analyse comparative sur une trentaine de modèles de
-prévision trimestrielle, nous démontrons que l'utilisation de ces
+prévision trimestrielle, nous montrons que l'utilisation de ces
 méthodes, notamment la modélisation espace-état, réduit les erreurs de
 prévision lorsque des ruptures sont présentes dans les coefficients. Par
 ailleurs, même lorsque les tests classiques concluent à la constance des
@@ -265,8 +265,8 @@ models with time-varying coefficients: piecewise regression, local
 regression, and state-space modeling. It also details their
 implementation in R using the \texttt{tvCoef} package. Through a
 comparative analysis of around thirty quarterly forecasting models, we
-demonstrate that the use of these methods, especially state-space
-modeling, reduces forecast errors when breakpoints are present in the
+show that the use of these methods, especially state-space modeling,
+reduces forecast errors when breakpoints are present in the
 coefficients. Moreover, even when traditional tests conclude stability
 of coefficients, state-space modeling can still improve forecasts.
 However, uncertainties related to estimating certain hyperparameters can
@@ -295,7 +295,7 @@ linéaire pour prévoir la croissance et le modèle macroéconomique Mésange
 \autocite{mesange} s'appuie sur des modèles à correction d'erreur pour
 modéliser les comportements macroéconomiques. Ces méthodes fournissent
 généralement de bons résultats et ont l'avantage d'être facilement
-interprétables. Cependant, ils supposent que les relations entre les
+interprétables. Cependant, elles supposent que les relations entre les
 variables (i.e, les coefficients estimés) sont fixes dans le temps~:
 cette hypothèse peut avoir du sens sur courte période mais n'est
 généralement plus vérifiée lorsque les modèles sont estimés sur longue
@@ -304,7 +304,7 @@ période, ce qui conduit à des modèles sous-optimaux.
 Pour palier à ce problème, une solution simple consiste à utiliser moins
 de données pour estimer les modèles. Par exemple, le guide des bonnes
 pratiques sur l'ajustement saisonnier \autocite{eurostat2015guidelines}
-recommandent de ne pas désaisonnaliser des séries de plus de 20 ans.
+recommande de ne pas désaisonnaliser des séries de plus de 20 ans.
 Toutefois, cela conduit à perdre l'historique des données et
 l'information que l'on peut en tirer et ne résout pas le problème
 lorsque la rupture est récente. Par ailleurs, comme montré par
@@ -317,13 +317,13 @@ l'utilisation de plusieurs modèles. Ainsi, dans certains cas il peut
 être préférable d'utiliser des modèles qui prennent directement en
 compte les ruptures.
 
-L'objectif de cette étude est d'étudier différentes méthodes
-d'estimation de coefficients variant dans le temps dans le cadre de la
-prévision conjoncturelle. Cela permet d'avoir des modèles qui ont
-l'avantage d'être plus facilement interprétables que des méthodes de
-machine learning, puisqu'ils s'appuient sur des modèles de régression
-linéaire. Ces méthodes se regroupent en trois catégories : les modèles
-de régression par morceaux, les régressions locales et les modèles
+Cette étude s'intéresse à différentes méthodes d'estimation de
+coefficients variant dans le temps dans le cadre de la prévision
+conjoncturelle. Cela permet d'avoir des modèles qui ont l'avantage
+d'être plus facilement interprétables que des méthodes de machine
+learning, puisqu'ils s'appuient sur des modèles de régression linéaire.
+Ces méthodes se regroupent en trois catégories : les modèles de
+régression par morceaux, les régressions locales et les modèles
 espace-état. La première suppose l'existence d'une rupture brutale sur
 les coefficients à une certaine date ; les deux autres supposent que les
 coefficients évoluent progressivement sans le temps sans existence de
@@ -339,7 +339,7 @@ coefficients sont fixes dans le temps (section~\ref{sec-tests}), nous
 décrivons trois méthodes pour estimer des coefficients variant dans le
 temps et montrons comment les implémenter à partir d'un modèle de
 prévision de la croissance du PIB français
-(section~\ref{sec-desc-meth}). Enfin, nous comparons les qualités
+(section~\ref{sec-desc-meth}). Nous comparons ensuite les qualités
 prédictives des différentes méthodes sur une trentaine de modèles de
 prévision trimestrielle (section~\ref{sec-comp-generales}). Nous
 montrons que, lorsque l'hypothèse de constance des coefficients n'est
@@ -351,7 +351,7 @@ erreurs de prévision.
 
 \section{Modélisation générale et tests}\label{sec-tests}
 
-Dans cet article, nous nous placerons dans le cadre de la régression
+Dans cette étude, nous nous plaçons dans le cadre de la régression
 linéaire avec des variables à une dimension. À chaque date \(t\), la
 variable \(y_t\) (e.g., taux de croissance du PIB) est expliquée par une
 combinaison linéaire de \(p\) variables explicatives,
@@ -372,18 +372,15 @@ des données. Cela suppose donc que la relation économique entre les
 différentes variables est stable dans le temps. Même si cette hypothèse
 est généralement vraie sur le court-terme, elle peut être invalidée sur
 le long-terme du fait de changements structurels (mesures économiques,
-crises, changement de nomenclature, etc.) L'objectif de cet article est
-d'étudier différent modèles permettant de relâcher cette hypothèse de
+crises, changement de nomenclature, etc.). L'objectif de cette étude est
+d'étudier différents modèles permettant de relâcher cette hypothèse de
 constance des coefficients. Le modèle général s'écrit donc : \[
 y_t={\bf X_t} \bf\alpha_t  +\varepsilon_t.
 \] Pour faciliter l'utilisation des modèles ici présentés, le package
-\faIcon{r-project} \texttt{tvCoef} \autocite{tvcoef} a été développé
-pour cette étude.
-
-Les différentes méthodes seront illustrées à travers l'exemple de la
-prévision du taux de croissance trimestriel du PIB à partir du climat
-des affaires France publié par l'Insee\footnote{ Cette série est
-  disponible à l'URL
+\faIcon{r-project} \texttt{tvCoef} \autocite{tvcoef} a été développé.
+Leur implémentation est illustrées à travers l'exemple de la prévision
+du taux de croissance trimestriel du PIB à partir du climat des affaires
+France publié par l'Insee\footnote{ Cette série est disponible à l'URL
   \url{https://www.insee.fr/fr/statistiques/serie/001565530}.}. Ces
 séries sont disponibles sous \faIcon{r-project} dans la base de donnée
 \texttt{tvCoef::gdp} :
@@ -411,8 +408,8 @@ Il est estimé en utilisant les données entre les années 1980 et 2019.
 Sous \faIcon{r-project}, ce modèle peut être estimé en utilisant la
 fonction \texttt{stats::lm()}. Toutefois, nous recommandons d'utiliser
 le package \texttt{dynlm} \autocite{dynlm} qui offre une plus grande
-flexibilité dans la définition des modèles et de conserver le format
-série temporelle dans les fonctions de \texttt{tvCoef}.
+flexibilité dans la définition des modèles et permet de conserver le
+format série temporelle dans les fonctions de \texttt{tvCoef}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -457,18 +454,18 @@ deux sous-périodes sont égaux~: \(\alpha_0' = \alpha_0''\),
 alternative et qu'au moins un des coefficients est différent entre les
 deux sous-périodes. C'est le principe du test de \textcite{chowtest}.
 
-L'inconvénient est que cela suppose d'avoir un a priori sur la date de
-la rupture à tester. Pour palier à ce problème,
+L'inconvénient est que cela suppose d'avoir un \emph{a priori} sur la
+date de la rupture à tester. Pour palier à ce problème,
 \textcite{bai2003computation} ont proposé un algorithme efficace afin de
 chercher la présence de ruptures multiples dans des modèles de
 régression linéaire. Cet algorithme a été implémenté sous
 \faIcon{r-project} dans le package \texttt{strucchange}
 \autocite{strucchangeBP}. La fonction
 \texttt{strucchange::breakpoints()} permet de chercher les ruptures et
-la fonction \texttt{strucchange::breakdates()} d'extraire facilement les
-dates associées. Le package \texttt{tvCoef} implémente une méthode
-\texttt{breakpoints.lm()} afin de pouvoir directement appliquer cette
-fonction aux régressions linéaires estimées :
+la fonction \texttt{strucchange::breakdates()} permet d'extraire
+facilement les dates associées. Le package \texttt{tvCoef} implémente
+une méthode \texttt{breakpoints.lm()} afin de pouvoir directement
+appliquer cette fonction aux régressions linéaires estimées :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -526,11 +523,11 @@ inconvénients :
   Il y a une instabilité sur le choix de la date et il suppose que la
   rupture est brutale à une certaine date. Si la rupture est brutale, le
   statisticien doit pouvoir expliquer son origine (changement de
-  nomenclature, de champ dans les données, crise\ldots) et a déjà un a
-  priori sur la date de rupture. Si l'on n'a aucune information sur la
-  présence d'une rupture, on peut raisonnablement penser que celle-ci
-  n'est pas brutale mais que la relation entre les variables a évolué de
-  manière progressive dans le temps.
+  nomenclature, de champ dans les données, crise\ldots) et a déjà un
+  \emph{a priori} sur la date de rupture. Si l'on n'a aucune information
+  sur la présence d'une rupture, on peut raisonnablement penser que
+  celle-ci n'est pas brutale mais que la relation entre les variables a
+  évolué de manière progressive dans le temps.
 \end{itemize}
 
 \subsection{Test de constance des coefficients}\label{sec-hansen-test}
@@ -541,7 +538,7 @@ propose une procédure permettant de tester uniquement si les
 coefficients sont constants ou non sans hypothèse sur la forme de la
 rupture (brutale ou non) et sur la date de la rupture.
 
-En repartant de la modélisation générale de la régression linéaire :
+La modélisation générale de la régression linéaire s'écrit :
 \begin{align*}
 y_t&=\alpha_{0}x_{0,t}+\alpha_{1} x_{1,t}+\dots+\alpha_{p} x_{p,t} +\varepsilon_t  \\
 &= {\bf X_t} \bf\alpha  +\varepsilon_t\\
@@ -552,16 +549,16 @@ faiblement dépendantes (cas général de la régression linéaire). Les
 variables ne doivent donc pas contenir de tendance déterministe ou
 stochastique (comme des racines unitaires).
 
-Le test consiste à tester si l'ensemble des paramètres
-\((\alpha,\sigma^2)\) sont constants. L'hypothèse alternative est qu'au
-moins un paramètre suit une martingale.
+Le test consiste à vérifier si l'ensemble des paramètres
+\((\bf \alpha,\sigma^2)\) sont constants. L'hypothèse alternative est
+qu'au moins un paramètre suit une martingale.
 
 Notons \({\hat \varepsilon}_t =y_t- {\bf X_t} \hat{\bf\alpha}\) et \[
 f_{i,t} = \begin{cases}
 x_{i,t}\hat \varepsilon_t &\text{ si }i\leq p\\
 \hat \varepsilon_t^2 - \hat \sigma^2&\text{ si }i=p+1
 \end{cases}
-\text{ et }S_{i,t} = \sum_{j=1}^tf_{i,j}\qquad(\text{N.B : }S_{i,n}=0)
+\text{ et }S_{i,t} = \sum_{j=1}^tf_{i,j}.
 \] D'après les conditions de premier ordre \(S_{i,n}=0.\)
 
 Le test individuel de constance du coefficient du paramètre \(i\) est :
@@ -635,7 +632,8 @@ Degrés de liberté & 1 \% & 2,5 \% & 5 \% & 7,5 \% & 10 \% & 20 \% \\
 
 \end{longtable}
 
-Source : \textcite{hansen1990lagrange}.
+Source : \textcite{hansen1990lagrange}. Table également disponible avec
+la commande \texttt{tvCoef::hansen\_table}.
 
 Ce test est implémenté dans la fonction \texttt{tvCoef::hansen\_test()}.
 Par défaut, le test joint ne comprend pas le test de constance de la
@@ -656,20 +654,38 @@ Variance      0.1169 0.47        FALSE
 Joint Lc      2.0730 1.47         TRUE
 \end{verbatim}
 
-Sur notre modèle de prévision de la croissance, le test de Hansen
-conclut à la non-constance des coefficients associés à la constance et
-au climat des affaires en niveau au seuil de 5 \%. En revanche, le
-coefficient associé au climat des affaires en différences serait
-constant (au seuil de 5 \%).
+Sur notre modèle de prévision de la croissance, le test joint conclut à
+la non constance des coefficients. Le test individuel sur le coefficient
+associé climat des affaires en différence conclut à sa constance (au
+seuil de 5 \%). En revanche, le test de Hansen individuel conclut à la
+non-constance des coefficients associés à la constante et au climat des
+affaires en niveau au seuil de 5 \%. La non constance de ces deux
+paramètres peut être vérifiée en utilisant un test joint sur ces deux
+variables :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hansen\_test}\NormalTok{(reg\_lin, }\AttributeTok{var =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                   L Stat Reject at 5%
+(Intercept)   1.7847 0.47         TRUE
+bc_fr_m1      1.8040 0.47         TRUE
+diff_bc_fr_m1 0.1883 0.47        FALSE
+Variance      0.1169 0.47        FALSE
+Joint Lc      1.9498 1.24         TRUE
+\end{verbatim}
 
 Le test de Hansen peut être vu comme une extension des tests de
 stabilité CUSUM (\emph{cumulative sum control chart}) et CUSUM sur les
 carrés (pour le test sur la variance). Il est robuste à
-l'hétéroscédasticité. En appliquant les mêmes formules au modèle
-``transformé'', ce test est également robuste à la prise en compte de
-l'autocorrélation via les moindres carrés généralisés. En revanche, ce
-test suppose que toutes les variables sont stationnaires : il ne peut
-donc directement s'appliquer sur des modèles du type modèle à correction
+l'hétéroscédasticité. En appliquant les mêmes formules au modèle «
+transformé », ce test est également robuste à la prise en compte de
+l'autocorrélation via les moindres carrés généralisés. En revanche, il
+suppose que toutes les variables sont stationnaires : il ne peut donc
+directement s'appliquer sur des modèles du type modèle à correction
 d'erreur. Dans ce cas, une loi asymptotique différente doit être
 utilisée\footnote{ Voir par exemple \textcite{hansen1992I1}. Une
   implémentation sous \faIcon{r-project} de ce cas est disponible sous
@@ -683,14 +699,14 @@ seconde estimation (estimation des paramètres de court-terme).
 Si un des tests précédents conclut à la non constance des coefficients
 du modèle estimé c'est qu'il est mal spécifié et donc qu'il faut
 utiliser une modélisation alternative qui pourrait notamment provenir
-d'un problème de variables omises. Dans cet article, nous supposons que
+d'un problème de variables omises. Dans cette étude, nous supposons que
 le problème de spécification provient des observations récentes et qu'il
 n'est pas nécessaire de faire un ajout de nouvelles variables
 explicatives pour le régler. Dans certains cas, par exemple pour prendre
 en compte la crise du COVID-19, il peut être utile nécessaires d'ajouter
 des variables supplémentaires (e.g., des indicatrices).
 
-Trois méthodes sont étudiées dans cet article :
+Trois méthodes sont étudiées dans cette étude :
 
 \begin{itemize}
 \item
@@ -706,7 +722,7 @@ Trois méthodes sont étudiées dans cet article :
 La régression par morceaux est la modélisation la plus simple : elle
 consiste à estimer le modèle sur un sous-ensemble des données. La
 modélisation est similaire à celle de la procédure de Bai et Perron
-puisque cette dernière donne directement les ``morceaux'' : entre les
+puisque cette dernière donne directement les « morceaux » : entre les
 dates de ruptures.
 
 Par exemple, pour le modèle de prévision de la croissance, deux
@@ -752,6 +768,7 @@ qui est cohérent avec le résultat du test de Hansen
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{reg\_morc }\OtherTok{\textless{}{-}} \FunctionTok{piece\_reg}\NormalTok{(reg\_lin)}
+\NormalTok{bp\_lm }\OtherTok{\textless{}{-}} \FunctionTok{bp\_lm}\NormalTok{(reg\_lin)}
 \FunctionTok{coef}\NormalTok{(reg\_morc}\SpecialCharTok{$}\NormalTok{model)}
 \end{Highlighting}
 \end{Shaded}
@@ -761,6 +778,19 @@ qui est cohérent avec le résultat du test de Hansen
           -1.73593533            0.02312509            0.03091897 
 `(Intercept)_2019.75`      bc_fr_m1_2019.75 diff_bc_fr_m1_2019.75 
           -1.72345409            0.02037620            0.05243651 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\FunctionTok{coef}\NormalTok{(bp\_lm}\SpecialCharTok{$}\NormalTok{model[[}\DecValTok{1}\NormalTok{]]), }\FunctionTok{coef}\NormalTok{(bp\_lm}\SpecialCharTok{$}\NormalTok{model[[}\DecValTok{2}\NormalTok{]]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  (Intercept)      bc_fr_m1 diff_bc_fr_m1   (Intercept)      bc_fr_m1 
+  -1.73593533    0.02312509    0.03091897   -1.72345409    0.02037620 
+diff_bc_fr_m1 
+   0.05243651 
 \end{verbatim}
 
 Cette égalité peut être testée en utilisant un test de Fisher, par
@@ -843,19 +873,19 @@ diff_bc_fr_m1_2000.25 diff_bc_fr_m1_2019.75
 \end{verbatim}
 
 La qualité prédictive du nouveau modèle peut s'apprécier de plusieurs
-façons, les plus classiques étant la minimisation du critère
-d'information d'Akaike (AIC et fonction \texttt{AIC()}) ou la
-minimisation des erreurs de prévisions hors échantillon (également
-appelées pseudo temps-réel, fonction \texttt{tvCoef::oos\_prev()}). Pour
-le calcul des erreurs de prévisions hors échantillon, la méthodologie
-retenue consiste à calculer pour chaque date \(t\) la prévision obtenue
-à la date \(t+1\) en estimant le modèle à partir des observations
-disponibles jusqu'à la date \(t\) uniquement. Avec cette méthode,
-appelée le \emph{leave-one-out cross-validation}, on ne s'intéresse donc
-qu'à la qualité de prévision à l'horizon d'un trimestre (ce qui est le
-cas d'utilisation pour les modèles étudiés). Par ailleurs, minimiser
-l'AIC est asymptotiquement équivalent à minimiser ces erreurs de
-prévisions hors échantillon \autocite{AIC}.
+façons, la plus classique étant la minimisation du critère d'information
+d'Akaike (AIC et fonction \texttt{AIC()}) ou la minimisation des erreurs
+de prévision hors échantillon (également appelées pseudo temps-réel,
+fonction \texttt{tvCoef::oos\_prev()}). Pour le calcul des erreurs de
+prévision hors échantillon, la méthodologie retenue consiste à calculer
+pour chaque date \(t\) la prévision obtenue à la date \(t+1\) en
+estimant le modèle à partir des observations disponibles jusqu'à la date
+\(t\) uniquement. Avec cette méthode, appelée le \emph{leave-one-out
+cross-validation}, on ne s'intéresse donc qu'à la qualité de prévision à
+l'horizon d'un trimestre (ce qui est le cas d'utilisation pour les
+modèles étudiés). Par ailleurs, minimiser l'AIC est asymptotiquement
+équivalent à minimiser ces erreurs de prévision hors échantillon
+\autocite{AIC}.
 
 Sur notre exemple, la régression linéaire par morceaux permet de
 minimiser ces deux critères~:
@@ -875,12 +905,12 @@ minimiser ces deux critères~:
 \begin{Highlighting}[]
 \NormalTok{oos\_reg\_morc }\OtherTok{\textless{}{-}} \FunctionTok{oos\_prev}\NormalTok{(reg\_morc)}
 \NormalTok{oos\_lm }\OtherTok{\textless{}{-}} \FunctionTok{oos\_prev}\NormalTok{(reg\_lin)}
-\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{ts.union}\NormalTok{(oos\_reg\_morc}\SpecialCharTok{$}\NormalTok{residuals, oos\_lm}\SpecialCharTok{$}\NormalTok{residuals)}
+\NormalTok{res\_oos }\OtherTok{\textless{}{-}} \FunctionTok{ts.union}\NormalTok{(oos\_reg\_morc}\SpecialCharTok{$}\NormalTok{residuals, oos\_lm}\SpecialCharTok{$}\NormalTok{residuals)}
 \CommentTok{\# Les deux modèles étant équivalents avant la rupture,}
 \CommentTok{\# on n\textquotesingle{}étudie les prévisions qu\textquotesingle{}après celle{-}ci}
-\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{window}\NormalTok{(res, }\AttributeTok{start =} \DecValTok{2003}\NormalTok{)  }
-\CommentTok{\# Erreurs de prévisions hors échantillon minimisées}
-\FunctionTok{apply}\NormalTok{(res, }\DecValTok{2}\NormalTok{, rmse)}
+\NormalTok{res\_oos }\OtherTok{\textless{}{-}} \FunctionTok{window}\NormalTok{(res\_oos, }\AttributeTok{start =} \DecValTok{2003}\NormalTok{)  }
+\CommentTok{\# erreurs de prévision hors échantillon minimisées}
+\FunctionTok{apply}\NormalTok{(res\_oos, }\DecValTok{2}\NormalTok{, rmse)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -897,11 +927,6 @@ estimer les coefficients associés aux régresseurs après la rupture, les
 estimateurs sont donc peu précis (grande variance). Pour les analyses
 hors échantillon, il faut donc faire attention aux valeurs prédites
 autour de la rupture !
-
-\begin{verbatim}
-Scale for x is already present.
-Adding another scale for x, which will replace the existing scale.
-\end{verbatim}
 
 \begin{figure}
 
@@ -920,8 +945,8 @@ linéaire par morceaux.}
 Comme indiqué dans la section~\ref{sec-test-baiperron}, l'inconvénient
 de cette méthode provient du choix de la date de rupture lorsque
 celle-ci n'est pas imposée par l'utilisateur. La
-figure~\ref{fig-temps-reel-bp} montre les dates de la rupture détectée
-par la procédure de Bai et Perron en fonction de la date de fin de fin
+figure~\ref{fig-temps-reel-bp} montre la date de la rupture détectée par
+la procédure de Bai et Perron en fonction de la date de fin de fin
 d'estimation du modèle de régression linéaire : aucune rupture n'est
 détectée avant 2009 ou lorsque le modèle est estimé en utilisant des
 données jusqu'en 2013T2-2015T3. En fonction de la date de fin
@@ -978,7 +1003,7 @@ estimés après la date de rupture détectée (2000T2).
 \begin{figure}
 
 \caption{\label{fig-coef-rollreg}Coefficients estimés par régression
-mobile et régression par morceaux.}
+linéaire, régression par morceaux et régression mobile.}
 
 \centering{
 
@@ -1023,7 +1048,7 @@ par \textcite{tvReg}\footnote{ D'autres packages sont disponibles pour
   \texttt{tvReg} du fait de sa simplicité d'utilisation et parce qu'il
   implémente également une fonction \texttt{tvReg::tvAR()} pour permet
   de prendre en compte de manière optimale les retards de la variable
-  endogène (non étudiée dans cette étude).}. On suppose ici que les
+  endogène (cas non étudié dans cette étude).}. On suppose ici que les
 coefficients \(\bf\alpha_t\) dépendent d'une variable aléatoire \(z_t\)
 : \(\bf\alpha_t=\alpha(z_t).\) Par défaut \(z_t=t/T\) avec \(T\) le
 nombre d'observations : les coefficients dépendent donc d'une mesure
@@ -1168,15 +1193,15 @@ linéaire, régression par morceaux et régression locale (avec
 
 \end{figure}%
 
-Un des inconvénients de méthode de sélection automatique de la fenêtre
-est que la statistique de validation croisée est un critère peu
-discriminant (voir \textcite{Loader1999}) : il peut y avoir très peu de
-différences entre différentes valeurs de la fenêtre alors que celle-ci a
-un impact fort sur l'interprétation du modèle ! Cela a également pour
-effet que la méthode est peu stable dans le temps
-(figure~\ref{fig-oos-bw}), ce qui augmente les sources de révisions des
-simulations hors échantillon, calculables en utilisant la fonction
-\texttt{oos\_prev()} :
+Un des inconvénients de la méthode de sélection automatique de la
+fenêtre utilisée est que le critère utilisée (statistique de validation
+croisée) est peu discriminant \autocite[voir notamment][]{Loader1999} :
+il peut y avoir très peu de différences entre différentes valeurs de la
+fenêtre alors que celle-ci a un impact fort sur l'interprétation du
+modèle ! Cela a également pour effet que la méthode est peu stable dans
+le temps (figure~\ref{fig-oos-bw}), ce qui augmente les sources de
+révisions des simulations hors échantillon, calculables en utilisant la
+fonction \texttt{oos\_prev()} :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1186,11 +1211,6 @@ simulations hors échantillon, calculables en utilisant la fonction
              \AttributeTok{frequency =} \DecValTok{4}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-Scale for x is already present.
-Adding another scale for x, which will replace the existing scale.
-\end{verbatim}
 
 \begin{figure}
 
@@ -1205,34 +1225,34 @@ fonction de la date de fin d'estimation du modèle.}
 
 \end{figure}%
 
-Pour l'estimation hors échantillon, la méthode utilisée est
-l'utilisation d'une fonction de noyau tronquée : plus de points dans le
-passé que dans le futur sont utilisés pour estimer les derniers
-coefficients. C'est donc également une source de révision au fur et à
-mesure que des nouveaux points seront connus. Même si des méthodes
-optimales existent pour minimiser les erreurs d'estimation des
-coefficients hors échantillon (voir par exemple
-\textcite{FengSchafer2021}), cela devrait ici avoir peu d'impact car un
-modèle très simple est ici utilisé pour estimer les coefficients
-(approximation de la fonction \(\alpha\) par une constante).
+Pour l'estimation en temps réel, la méthode utilisée est l'utilisation
+d'une fonction de noyau tronquée : plus de points dans le passé que dans
+le futur sont utilisés pour estimer les derniers coefficients. C'est
+donc également une source de révision au fur et à mesure que des
+nouveaux points seront connus. Même si des méthodes optimales existent
+pour minimiser les erreurs d'estimation des coefficients en temps réel
+\autocite[voir par exemple][]{FengSchafer2021}, cela devrait ici avoir
+peu d'impact car un modèle très simple est ici utilisé pour estimer les
+coefficients (approximation de la fonction \(\alpha\) par une
+constante).
 
 Un autre inconvénient de ces méthodes est que tous les coefficients
 varient dans la temps alors que dans certains cas on peut supposer la
-relation constante. Si l'on souhaite fixer certains coefficients, on
-peut procéder comme dans la section~\ref{sec-test-baiperron} en faisant
-une régression linéaire, pour estimer les coefficients fixes, suivie
-d'une régression mobile.
+relation constante. Pour fixer certains coefficients, on peut procéder
+comme dans la section~\ref{sec-test-baiperron} en faisant une régression
+linéaire pour estimer les coefficients fixes, suivie d'une régression
+mobile.
 
 \subsection{Modélisation espace-état}\label{sec-ssm}
 
 La modélisation espace-état est une méthodologie générale permettant de
 traiter un grand nombre de problèmes de séries temporelles. Dans cette
 approche, on suppose que tout modèle est déterminé par une série de
-vecteurs non observés \(\alpha_1,\dots,\alpha_n\) associés aux
-observations \(y_1,\dots,y_n\), la relation entre \(\alpha_t\) et
+vecteurs non observés \(\bf \alpha_1,\dots,\bf\alpha_T\) associés aux
+observations \(y_1,\dots,y_T\), la relation entre \(\alpha_t\) et
 \(y_t\) étant spécifiée par le modèle espace-état. Ces modèles sont
 largement décrits dans la littérature, notamment par
-\textcite{durbinkoopman}. Dans cet article, nous nous placerons dans un
+\textcite{durbinkoopman}. Dans cette étude, nous nous placerons dans un
 cadre simplifié des modèles linéaires gaussiens appliqués aux
 régressions linéaires. Les modèles sont déterminés par un ensemble de
 deux équations : \[
@@ -1256,11 +1276,11 @@ de la régression linéaire lorsque \(\bf\Sigma=\bf 0\) puisque dans ce
 cas tous les \(\alpha_t\) sont égaux.
 
 Ces modèles sont implémentés dans la fonction \texttt{tvCoef::ssm\_lm()}
-qui prend en entrée un modèle de régression linéaire. L'implémentation
-est basée sur le package \texttt{rjd3sts} \autocite{rjd3sts} qui permet
-d'implémenter très facilement les modèles espaces-état sans devoir
-écrire explicitement le modèle. Par défaut les variances du vecteur
-d'états (\(\bf \Sigma\)) ne sont pas estimés et fixés à 0 : on retrouve
+qui prend en entrée un modèle de régression linéaire. Elle s'appuie sur
+le package \texttt{rjd3sts} \autocite{rjd3sts} qui permet d'implémenter
+très facilement les modèles espaces-état sans devoir écrire
+explicitement le modèle. Par défaut les variances du vecteur d'états
+(\(\bf \Sigma\)) ne sont pas estimées et sont fixées à 0 : on retrouve
 donc les coefficients estimés par régression linéaire.
 
 \begin{Shaded}
@@ -1276,12 +1296,13 @@ Mean of time-varying estimated coefficients (smoothing):
       -1.6377        0.0208        0.0422        0.0000 
 \end{verbatim}
 
-L'estimation des hyperparamètres (variances des bruits blancs) est faite
-par maximum de vraisemblance différentes méthodes existent pour
-initialiser les modèles (calculer \(\bf \alpha_1\)). Pour plus de
-détails voir par exemple \textcite{durbinkoopman}. Le filtre de Kalman
-permet ensuite de calculer tous les coefficients. Parmi les paramètres
-calculés, les deux principaux sont :
+L'estimation des hyperparamètres (variances des bruits blancs \(\eta_t\)
+et \(\varepsilon_t\)) est faite par maximum de vraisemblance, et
+différentes méthodes existent pour initialiser les modèles (calculer
+\(\bf \alpha_1\)). Pour plus de détails voir par exemple
+\textcite{durbinkoopman}. Le filtre de Kalman permet ensuite de calculer
+tous les coefficients. Parmi les paramètres calculés, les deux
+principaux sont :
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1351,9 +1372,9 @@ calculés, les deux principaux sont :
 
 Lorsque les variances sont estimées, les états filtrés ne correspondent
 pas à exactement à des estimations hors échantillon car les
-hyperparamètres sont fixés (variances \(\bf\Sigma\) et initialisation).
-Les estimations hors échantillon peuvent être calculées en utilisant la
-fonction \texttt{tvCoef::ssm\_lm\_oos()}.
+hyperparamètres restent fixés (variances \(\bf\Sigma\) et
+initialisation). Les estimations hors échantillon peuvent être calculées
+en utilisant la fonction \texttt{tvCoef::ssm\_lm\_oos()}.
 
 Pour faciliter l'estimation des variances \(\bf\Sigma,\) le paramètre
 est souvent reparamétré : \[
@@ -1456,10 +1477,10 @@ fait des instabilités sur l'estimation de la fenêtre. Le test de
 Diebold-Mariano (voir notamment \textcite{DMtest}), implémenté dans la
 fonction \texttt{forecast::dm.test()} \autocite{forecastR}, permet de
 tester si cette différence est significative. Dans et hors échantillon,
-les modèles espace-état ont des erreurs de prévisions significativement
+les modèles espace-état ont des erreurs de prévision significativement
 plus petites que la régression linéaire (p-valeurs respectivement de
 0,00 et 0,05). Dans l'échantillon elles sont également significativement
-plus petites que celles de la régression par morceau (p-valeur de 0,00)
+plus petites que celles de la régression par morceaux (p-valeur de 0,00)
 mais la différence n'est pas significative hors échantillon (p-valeur de
 0,10) : l'interprétation économique sur les périodes récentes est en
 revanche différente (coefficient sur le climat des affaires en
@@ -1553,7 +1574,7 @@ alternative hypothesis: greater
 \begin{longtable}[]{@{}lrr@{}}
 
 \caption{\label{tbl-res-model-pib}Erreurs quadratiques moyennes des
-erreurs de prévisions entre les différentes méthodes.}
+erreurs de prévision entre les différentes méthodes.}
 
 \tabularnewline
 
@@ -1570,9 +1591,9 @@ Modèle espace-état & 0,32 & 0,37 \\
 
 \end{longtable}
 
-Note : Les prévisions dans l'échantillon sont calculées en estimant les
+Note : les prévisions dans l'échantillon sont calculées en estimant les
 modèles à partir des données disponibles entre 1980T1 et 2019T4. Les
-prévisions hors échantillon sont calculées en à partir de 2003T1 : la
+prévisions hors échantillon sont calculées à partir de 2003T1 : la
 première prévision (2003T1) correspond à celle que l'on aurait eu en
 estimant les modèles à partir des données disponibles jusqu'en 2002T4
 (trimestre précédente).
@@ -1614,28 +1635,19 @@ simple consiste à ajouter des indicatrices sur les trimestres concernés
   15.88744163   -1.13892410 
 \end{verbatim}
 
-Pour la construction des autres modèles, nous gardons les paramètres
-estimés en utilisant les données avant la période du COVID-19, cette
-dernière pouvant biaiser les résultats. Ainsi :
+Pour la construction des autres modèles, nous gardons certains
+paramètres estimés en utilisant les données avant la période du
+COVID-19, cette dernière pouvant biaiser les résultats. Ainsi~:
 
 \begin{itemize}
 \tightlist
 \item
   Pour la régression par morceaux, la date de rupture retenue est
   toujours 2000T2 (contre 2016T1 en utilisant les données après 2020).
-\item
-  Pour la régression locale, la fenêtre utilisée est 0,75 (contre 0,04
-  en utilisant les données après 2020).
-\item
-  Pour la modélisation espace-état, le coefficient du climat des
-  affaires en niveau est toujours considéré comme fixe (il est considéré
-  comme mobile en utilisant les données après 2020). Toutefois les
-  variances des autres coefficients sont de nouveau estimées.
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Date différente de rupture détectée mais l\textquotesingle{}on garde 2000T2 par continuité}
 \NormalTok{bp\_covid }\OtherTok{\textless{}{-}} \FunctionTok{breakpoints}\NormalTok{(reg\_lin\_covid)}
 \FunctionTok{c}\NormalTok{(}\FunctionTok{breakdates}\NormalTok{(bp), }\FunctionTok{breakdates}\NormalTok{(bp\_covid))}
 \end{Highlighting}
@@ -1644,6 +1656,13 @@ dernière pouvant biaiser les résultats. Ainsi :
 \begin{verbatim}
 [1] 2000.25 2016.00
 \end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Pour la régression locale, la fenêtre utilisée est 0,75 (contre 0,04
+  en utilisant les données après 2020).
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1659,6 +1678,34 @@ dernière pouvant biaiser les résultats. Ainsi :
 \begin{verbatim}
 [1] 0.74857843 0.03899898
 \end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Pour la modélisation espace-état, les coefficients associés aux
+  indicatrices sont fixés (variance nulle) et le coefficient du climat
+  des affaires en niveau est toujours considéré comme fixe (il est
+  considéré comme mobile en utilisant les données après 2020). Toutefois
+  les variances des autres coefficients sont de nouveau estimées.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssm\_covid }\OtherTok{\textless{}{-}} \FunctionTok{ssm\_lm}\NormalTok{(}
+\NormalTok{  reg\_lin\_covid, }
+  \AttributeTok{fixed\_var\_intercept =} \ConstantTok{FALSE}\NormalTok{,}
+  \AttributeTok{fixed\_var\_variables =} \FunctionTok{c}\NormalTok{(}\ConstantTok{FALSE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\NormalTok{)}
+\FunctionTok{sqrt}\NormalTok{(ssm\_covid}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{parameters }\SpecialCharTok{*}\NormalTok{ ssm\_covid}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{scaling)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  (Intercept).var      bc_fr_m1.var diff_bc_fr_m1.var         noise.var 
+     0.0000000000      0.0001800311      0.0130758849      0.3353519162 
+\end{verbatim}
+
+Les modèles sont donc estimés avec le code suivant :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1700,7 +1747,7 @@ celle de la figure~\ref{fig-coef-ssm}.
 
 \caption{\label{fig-coef-covid}Coefficients estimés (hors indicatrices)
 par régression linéaire, régression par morceaux, régression locale
-(avec \(b=0,74\)) et modèle espace-état en utilisant les données
+(avec \(b=0,75\)) et modèle espace-état en utilisant les données
 jusqu'en 2022T4.}
 
 \centering{
@@ -1740,7 +1787,7 @@ formule de la fonction \texttt{dynlm()}\footnote{ Ce qui aurait pu être
   dans la fonction \texttt{dynlm()}.}) il faut alors recalculer toutes
 les variables explicatives. La fonction
 \texttt{tvCoef::full\_exogeneous\_matrix()} peut aider à effectuer cette
-tache et calcule également le régresseur associé à la constante (égal à
+tâche et ajoute également le régresseur associé à la constante (égal à
 1) :
 
 \begin{Shaded}
@@ -1768,6 +1815,7 @@ tache et calcule également le régresseur associé à la constante (égal à
 \NormalTok{prev\_reg\_morc }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{tail}\NormalTok{(}\FunctionTok{coef}\NormalTok{(reg\_morc\_covid), }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ der\_period)}
 \NormalTok{prev\_reg\_loc }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{tail}\NormalTok{(}\FunctionTok{coef}\NormalTok{(reg\_loc\_covid), }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ der\_period)}
 \NormalTok{prev\_ssm }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{tail}\NormalTok{(}\FunctionTok{coef}\NormalTok{(ssm\_covid), }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ der\_period)}
+\CommentTok{\# Ensemble des prévisions pour 2023T1 :}
 \FunctionTok{round}\NormalTok{(}
   \FunctionTok{c}\NormalTok{(prev\_reg\_lin, prev\_reg\_morc, prev\_reg\_loc, prev\_ssm), }
   \DecValTok{2}\NormalTok{)}
@@ -1823,19 +1871,19 @@ Total & 28 & 14 & 12 \\
 
 Lecture : dans la branche des biens d'équipement (C3), 6 modèles sont
 étudiés. Dans 4 de ces modèles la procédure de Bai et Perron conclut à
-la présence d'au moins une rupture et le test d'Hansen conclut que les
-coefficients sont mobiles dans 5 de ces modèles.
+la présence d'au moins une rupture et le test joint d'Hansen conclut que
+les coefficients sont mobiles dans 5 de ces modèles.
 
-Pour l'estimation des modèles des modèles de régression par morceaux,
-nous limitons le nombre maximal de ruptures à 2. La dernière rupture est
-détectée en 2011Q4 pour deux modèles de la branche des autres industries
-(C5). Les prévisions en hors échantillon sont donc calculées après 2013
-afin d'éviter les fortes erreurs autour des ruptures. Pour la régression
-locale et la modélisation espace-état, les modèles sont estimés avec les
-paramètres par défaut sans chercher à optimiser les modèles (par exemple
-en ne fixant pas les coefficients des indicatrices). Ainsi, même si les
-estimations pourrait être améliorées, cela permet d'étudier leur qualité
-prédictive dans le cas le moins favorable.
+Pour l'estimation des modèles de régression par morceaux, nous limitons
+le nombre maximal de ruptures à 2. La dernière rupture est détectée en
+2011T4, pour deux modèles de la branche des autres industries (C5). Les
+prévisions hors échantillon sont calculées après 2013 afin d'éviter les
+fortes erreurs autour des ruptures. Pour la régression locale et la
+modélisation espace-état, les modèles sont estimés avec les paramètres
+par défaut sans chercher à optimiser les modèles (par exemple en ne
+fixant pas les coefficients des indicatrices). Ainsi, même si les
+estimations pourraient être améliorées, cela permet d'étudier leur
+qualité prédictive dans le cas le moins favorable.
 
 Si l'on souhaite comparer les résultats entre les différentes branches,
 il est nécessaire de normaliser les erreurs de prévision. Les
@@ -1848,32 +1896,34 @@ section nous utilisons la moyenne absolue des erreurs normalisées ---
 \textcite{HYNDMAN2006679} : \[
 MASE=moyenne\left(\frac{|{\hat y}_{t} - y_t|}{Q}\right),
 \] où \(Q\) est une mesure stable de l'échelle de la série. Pour les
-séries non saisonnières, ce qui est ici le cas, nous utilisons : \[
+séries non saisonnières, ce qui est ici le cas, les auteurs proposent :
+\[
 Q=\frac{1}{T-1}\sum_{t=2}^T|y_t-y_{t-1}|.
 \]
 
 La table~\ref{tbl-error-table} montre les résultats des MASE associées
-différentes méthodes relativement aux prévisions du modèle de régression
-linéaire. Dans l'ensemble ce sont les modèles espace-état qui donne les
-meilleurs résultats. Pour les modèles où une rupture a été détectée, les
-modèles espace état permettent d'améliorer la qualité d'en moyenne 18~\%
-par rapport à la régression linéaire (avec un minimum de 6~\%), contre
-une amélioration d'en moyenne 12~\% ou 11~\% pour la régression locale
-et la régression par morceaux. Hors échantillon, les résultats sont
-également améliorés avec la modélisation espace état pour la majorité
-des modèles (en moyenne de 7~\% et au maximum de 20~\%) mais sont
-dégradés pour 3 des 14 modèles (d'au plus 5~\%). Pour la régression
-locale, les résultats sont, dans la majorité des cas (12 modèles sur 14)
-identiques ou dégradés par rapport à la régression linéaire (avec une
-dégradation d'au plus 17~\%). Pour la régression par morceaux, même si
-pour 8 séries les résultats sont améliorées, cette amélioration semble
-moins forte qu'avec les modèles espace (au plus 11~\%).
+aux différentes méthodes, relativement aux prévisions du modèle de
+régression linéaire. Dans l'ensemble ce sont les modèles espace-état qui
+donnent les meilleurs résultats. Pour les modèles où une rupture a été
+détectée, les modèles espace état permettent d'améliorer la qualité
+prédictive d'en moyenne 18~\% par rapport à la régression linéaire (avec
+un minimum de 6~\%), contre une amélioration d'en moyenne 12~\% ou 11~\%
+pour la régression locale et la régression par morceaux. Hors
+échantillon, les résultats sont également améliorés avec la modélisation
+espace état pour la majorité des modèles (en moyenne de 7~\% et au
+maximum de 20~\%) mais sont dégradés pour 3 des 14 modèles (d'au plus
+5~\%). Pour la régression locale, les résultats sont, dans la majorité
+des cas (12 modèles sur 14), identiques ou dégradés par rapport à la
+régression linéaire (avec une dégradation d'au plus 17~\%). Pour la
+régression par morceaux, même si pour 8 séries les résultats sont
+améliorées, cette amélioration semble moins forte qu'avec les modèles
+espace-état (au plus 11~\%).
 
 Étonnamment, lorsqu'aucune rupture n'est détectée les modèles
 espace-état permettent également d'améliorer les résultats : dans
-l'échantillon les erreurs de prévisions sont réduites d'en moyenne 7~\%
+l'échantillon les erreurs de prévision sont réduites d'en moyenne 7~\%
 et d'au plus 22~\% et ne sont jamais dégradées. Elles sont en revanche
-dégradées pour quelques modèles en temps réel (d'au plus 7~\%), elle
+dégradées pour quelques modèles en temps réel (d'au plus 7~\%), elles
 sont améliorées pour 3 modèles (jusqu'à 27~\%). Cette instabilité
 provient également du fait qu'aucune optimisation n'est faite dans la
 spécification des modèles. Toutefois ces résultats suggèrent que les
@@ -1924,20 +1974,20 @@ Mod. espace-état & $0,93$ & $0,80$ & $1,05$ & $11$ & $0$ & $3$ \\
 Note : les modèles sans rupture sont ceux où aucune rupture n'est
 détectée par la procédure de Bai et Perron.
 
-Lecture : pour les prévisions hors échantillon la modélisation permet,
-par rapport à la régression linéaire, le MASE est réduit d'en moyenne de
-7~\% pour les modèles avec rupture et de 1~\% pour les modèles sans
-rupture. Trois modèles sans rupture sont améliorés grâce à la
-modélisation espace-état (avec une réduction maximale de la MASE de
-27~\%) et les erreurs de prévisions sont augmentées pour quatre modèles
-(avec une hausse maximale de 7~\%).
+Lecture : pour les prévisions hors échantillon la modélisation
+espace-état permet, par rapport à la régression linéaire, de réduire la
+MASE d'en moyenne de 7~\% pour les modèles avec rupture et de 1~\% pour
+les modèles sans rupture. Trois modèles sans rupture sont améliorés
+grâce à la modélisation espace-état (avec une réduction maximale de la
+MASE de 27~\%) et les erreurs de prévision sont augmentées pour quatre
+modèles (avec une hausse maximale de 7~\%).
 
 \section{Conclusion}\label{conclusion}
 
 En conclusion, cette étude montre comment, à partir d'un modèle de
-régression linéaire, on peut tester l'hypothèse de constance des
-coefficients et relâcher cette hypothèse en implémentant des modèles de
-régression par morceaux, de régression mobile et espace-état. Cette
+régression linéaire, l'hypothèse de constance des coefficients peut être
+tester et comment relâcher cette hypothèse en implémentant des modèles
+de régression par morceaux, de régression mobile et espace-état. Cette
 implémentation est facilitée grâce au package \texttt{tvCoef}
 (\url{https://github.com/InseeFrLab/tvCoef}) qui accompagne cette étude
 et tous les codes associés sont disponibles sous sous
@@ -1945,31 +1995,30 @@ et tous les codes associés sont disponibles sous sous
 
 Lorsque les tests classiques indiquent une non-constance des
 coefficients, ces trois méthodes permettent de réduire les erreurs de
-prévisions dans l'échantillon (lorsque les coefficients sont estimés sur
+prévision dans l'échantillon (lorsque les coefficients sont estimés sur
 l'ensemble des données). Toutefois, ces trois méthodes reposent sur des
 hypothèses qui peuvent conduire à des fortes instabilités, notamment si
 elles sont utilisées naïvement lors des exercices de prévision en temps
 réel (hors échantillon).\\
-La régression par morceaux supposent la connaissance de dates de
-ruptures : même si des procédures existent pour leur détection
-automatique \autocite{bai2003computation}, les instabilités autour de
-celles-ci font qu'il est préférable de s'appuyer sur un raisonnement
-économique. En effet, si rupture brutale il y a, elle doit pouvoir
-s'expliquer et le statisticien devrait pouvoir en trouver la cause.\\
+La régression par morceaux suppose la connaissance de dates de ruptures
+: même si des procédures existent pour leur détection automatique
+\autocite{bai2003computation}, les instabilités autour de celles-ci font
+qu'il est préférable de s'appuyer sur un raisonnement économique. En
+effet, si rupture brutale il y a, elle doit pouvoir s'expliquer et le
+statisticien devrait pouvoir l'expliquer.\\
 Le paramètre principal de la régression locale est la fenêtre, qui
 permet de jouer sur la sensibilité des estimations aux observations
 lointaines. Même s'il existe également des procédures de sélection
-automatique, celles-ci sont également instables, ce qui conduit, lors
-des exercices de prévisions en temps réel, à des erreurs de prévisions
-plus élevées que la régression linéaire lorsque la fenêtre n'est pas
-fixée.\\
+automatique, leurs instabilités conduisent à des erreurs de prévision
+plus élevées que la régression linéaire lors des exercices de prévisions
+en temps réel.\\
 Enfin, dans les modèles espace-état, des instabilités numériques
 d'optimisation peuvent conduire à une volatilité dans l'estimation des
 variances des coefficients (qui déterminent si le coefficient varie ou
 non dans le temps et à quelle vitesse). C'est toutefois la méthode qui
 donnent les meilleurs résultats et qui permet dans la majorité des cas
 de réduire les erreurs de prévision par rapport à la régression
-linéaire, même les tests classiques indiquent une constance des
+linéaire, même lorsque les tests classiques indiquent une constance des
 coefficients !
 
 Même si ces méthodes permettent, par rapport à la régression linéaire,
@@ -1987,22 +2036,22 @@ récente.
 
 Cette étude pourrait être étendue de plusieurs manières. Tout d'abord,
 les méthodes ici présentées pourraient être améliorées. Par exemple,
-pour la régression locale et la modélisation espace-état, on suppose que
-les paramètres évoluent à la même vitesse au cours de toute la période
-d'estimation (fenêtre fixe et variance fixée). Toutefois, autour des
-périodes de crises (comme le COVID-19) on pourrait vouloir ajouter plus
-de flexibilités à l'évolution des coefficients (en réduisant la fenêtre
-ou en effectuant un choc sur la variance) : cela ajouterait plus de
-variabilité dans les estimations mais pourrait permettre de mieux
-prendre en compte les changements structurels.\\
+pour la régression locale et la modélisation espace-état, nous supposons
+que les paramètres évoluent à la même vitesse au cours de toute la
+période d'estimation (fenêtre fixe et variance fixée). Toutefois, autour
+des périodes de crises (comme le COVID-19), il pourrait être pertinent
+d'ajouter plus de flexibilités à l'évolution des coefficients (en
+réduisant la fenêtre ou en effectuant un choc sur la variance) : cela
+ajouterait plus de variabilité dans les estimations mais pourrait
+permettre de mieux prendre en compte les changements structurels.\\
 Ensuite, d'autres méthodes d'estimations pourraient être utilisées pour
 modéliser l'évolution dans le temps des coefficients. Par exemple
 \textcite{melard} modélise des variations déterministes des coefficients
 (plutôt que stochastiques comme pour les modèles espace-état).\\
 Enfin, les modèles auraient également pu être comparés aux modèles à
-seuil et modèles à changement de régime markoviens \autocite[voir par
-exemple][ pour une revue bibliographique de ces
-modèles]{PETROPOULOS2022705} qui peuvent se voir comme des cas
+seuil et modèles à changement de régime markoviens \autocite[pour une
+revue bibliographique de ces modèles, voir par
+exemple][]{PETROPOULOS2022705} qui peuvent se voir comme des cas
 particuliers des méthodes étudiés. En effet, dans les modèles à seuil la
 rupture est brutale et dépend du niveau d'une variable exogène et dans
 les modèles à changement de régime markoviens, les coefficients
@@ -2012,6 +2061,7 @@ externe (comme dans la régression locale). \emph{In fine}, le choix
 entre toutes ces méthodes se fait surtout sur les hypothèses économiques
 que l'on souhaite modéliser.
 
+\newpage
 \appendix
 
 \section{\texorpdfstring{Installation de
@@ -2051,7 +2101,7 @@ partir des liens suivants :
 Pour installer une version portable de java, télécharger par exemple le
 fichier \texttt{Windows\ 10\ x64\ Java\ Development\ Kit} disponible sur
 \url{https://jdk.java.net/java-se-ri/17}, le dézipper et le mettre par
-exemple sous \texttt{""}.
+exemple sous \texttt{"D:/Programmes/jdk-17"}.
 
 Pour configurer R avec une version portable de Java, trois solutions~:
 
@@ -2083,11 +2133,11 @@ Pour configurer R avec une version portable de Java, trois solutions~:
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \item
-  modifier le \texttt{JAVA\_HOME} dans les variables d'environnement de
+  Modifier le \texttt{JAVA\_HOME} dans les variables d'environnement de
   Windows (voir
   \url{https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html}).
 \item
-  modifier le \texttt{.Renviron} : depuis R lancer le code
+  Modifier le \texttt{.Renviron} : depuis R lancer le code
   \VERB|\FunctionTok{file.edit}\NormalTok{(}\StringTok{"\textasciitilde{}/.Renviron"}\NormalTok{)}|,
   ajouter dans le fichier le chemin vers la version portable de Java
   comme précédemment
@@ -2107,8 +2157,9 @@ Il reste maintenant à installer les packages :
 \end{Highlighting}
 \end{Shaded}
 
-Si vous utilisez un ordinateur professionnel, si c'est nécessaire,pensez
-à configurer le proxy pour que ces commandes puissent fonctionner (voir
+Si vous utilisez un ordinateur professionnel, si c'est nécessaire,
+pensez à configurer le proxy pour que ces commandes puissent fonctionner
+(voir
 \url{https://www.book.utilitr.org/01_r_insee/fiche-personnaliser-r\#le-fichier-.renviron}).
 Pour cela vous pouvez utiliser \texttt{curl::ie\_get\_proxy\_for\_url()}
 pour récupérer l'adresse du proxy et ajouter deux variable
